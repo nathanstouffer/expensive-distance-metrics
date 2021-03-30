@@ -4,7 +4,7 @@ from sys import argv
 script, file_name, num_pts = argv
 num_pts = int(num_pts)
 
-output = ""
+output = str(num_pts) + "\n"
 
 max = 100000
 
