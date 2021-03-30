@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def euclidean_r(file):
     points = []

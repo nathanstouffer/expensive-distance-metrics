@@ -1,15 +1,11 @@
-import metrics
-
-def function(x):
-    return x ** 3
-
-def dist1(p1,p2):
-    return 3
-
-def dist2(p1, p2):
-    return 4
+from src.complete import Complete
+from src import point_readers, metrics
 
 
-p1 = (0,0,0)
-p2 = (1,1,1)
-print(metrics.euclidean(p1,p2))
+
+
+
+if __name__ == "__main__":
+    c = Complete('euclidean-random-10.in', point_readers.euclidean_r, metrics.euclidean)
+    c.mtx_to_file()
+    print()
