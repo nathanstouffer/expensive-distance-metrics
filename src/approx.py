@@ -76,17 +76,25 @@ class Approx:
     def build_matrix(self):
         n = len(self.points)
         print('Check correctness')
+        bad = 0
         for i in range(n):
             for j in range(n):
                 if self.upper[i][j] != self.lower[i][j]:
                     print("BAD AT " + str(i) + ', ' + str(j))
                     print(self.upper[i][j]/self.lower[i][j])
+                    print(self.upper[i][j],self.lower[i][j])
+                    bad += 1
+
 
 
         self.matrix = np.zeros((n,n))
 
         p = dict(nx.shortest_path_length(self.G, weight='weight'))
         print(p)
+
+        print()
+        print("Total Bad: " + str(bad))
+
         for i in range(n):
             for j in range(i, n):
                 self.matrix[i][j] = p[i][j]
