@@ -1,6 +1,6 @@
 from src.approx import Approx
 from src.complete import Complete
-from src import point_readers, metrics, selectors
+from src import point_readers, metrics, edge_selectors
 from src.dbscan import dbscanner
 
 if __name__ == "__main__":
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     db.plot(c.points)
     print()
 
-    a = Approx('euclidean-cluster-4-100.in', 0, point_readers.euclidean_r, metrics.euclidean, selectors.blind_random)
+    a = Approx('euclidean-cluster-4-100.in', 0, point_readers.euclidean_r, metrics.euclidean, edge_selectors.blind_random)
     a.mtx_to_file()
     db2 = dbscanner(a.matrix)
     db2.run()

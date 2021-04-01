@@ -60,15 +60,21 @@ class Approx:
 
         for k in range(n):
             for l in range(n):
+                if k == l:
+                    continue
+
+                # TODO: fix updates. Something is wrong with first coordinate. For [i][j] lower > upper sometimes and
+                # TODO: if so then lower[i][k] = lower[i][q]
+
                 upper = min(self.upper[k][l], self.upper[k][i] + v + self.upper[j][l], self.upper[k][j] + v + self.upper[i][l])
                 self.upper[k][l] = upper
                 # self.upper[l][k] = upper
 
                 lower1 = v - self.upper[k][i] - self.upper[l][j]
-                lower2 = self.lower[j][l] - v - self.upper[k][i]
-                lower3 = self.lower[j][k] - v - self.upper[j][i]
-                lower4 = v - self.upper[k][j] - self.upper[l][i]
-                lower5 = self.lower[i][l] - v - self.upper[k][j]
+                lower2 = v - self.upper[k][j] - self.upper[l][i]
+                lower3 = self.lower[j][l] - v - self.upper[k][i]
+                lower4 = self.lower[i][l] - v - self.upper[k][j]
+                lower5 = self.lower[j][k] - v - self.upper[j][i]
                 lower6 = self.lower[i][k] - v - self.upper[i][j]
                 lower = max(self.lower[k][l],lower1,lower2,lower3,lower4,lower5,lower6)
                 self.lower[k][l] = lower

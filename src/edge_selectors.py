@@ -30,14 +30,15 @@ def blind_greedy(lower, upper, eps):
     max_indx = np.array([-1, -1])
     for i in range(n):
         for j in range(n):
-            u = upper[i][j]
-            l = lower[i][j]
-            if (l == 0.0):
-                return np.array([i,j])
-            if (u/l > 1+eps):
-                if (u/l > max):
-                    max = u/l
-                    max_indx = np.array([i, j])
+            if (i != j):
+                u = upper[i][j]
+                l = lower[i][j]
+                if (l == 0.0):
+                    return np.array([i,j])
+                if (u/l > 1+eps):
+                    if (u/l > max):
+                        max = u/l
+                        max_indx = np.array([i, j])
     return max_indx
 
 
