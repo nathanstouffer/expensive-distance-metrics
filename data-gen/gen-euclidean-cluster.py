@@ -2,14 +2,17 @@ import numpy as np
 from random import random
 from sys import argv
 
-script, file_name, num_clusters, num_pts = argv
+dir = '../input/'
+
+# script, file_name, num_clusters, num_pts = argv
+file_name, num_clusters, num_pts = "euclidean-cluster-small.in", "3", 10
 num_clusters = int(num_clusters)
 num_pts      = int(num_pts)
 
 output = str(num_pts) + "\n"
 
-max    = 300
-radius = 10
+max    = 100
+radius = 5
 
 num_noise   = int(0.05*num_pts)
 rem         = num_pts-num_noise
@@ -36,6 +39,6 @@ for i in range(counter, num_pts):
     output += str(x) + "," + str(y) + "\n"
     counter += 1
 
-fout = open(file_name, 'w')
+fout = open(dir + file_name, 'w')
 fout.write(output)
 fout.close()

@@ -5,18 +5,19 @@ import colorsys
 
 
 class dbscanner:
-    def __init__(self, matrix):
+    def __init__(self, matrix, ep):
         self.matrix = matrix
+        self.epsilon = ep
 
     def run(self):
-        clustering = DBSCAN(eps=10, metric='precomputed')
+        clustering = DBSCAN(eps=self.epsilon, metric='precomputed')
         clustering.fit(self.matrix)
         labels = clustering.labels_
         self.labels = labels
         # print(labels)
         # self.plot(labels, complete)
 
-    def plot(self, points):
+    def plot(self, points, title = 'NONE'):
         colors_d = self.__assign_colors(max(self.labels) + 1)
         colors = {}
         for i in range(max(self.labels) + 1):
@@ -28,8 +29,12 @@ class dbscanner:
         x = [p[0] for p in points]
         y = [p[1] for p in points]
 
-        plt.figure(figsize=(10,10))
+        fig = plt.figure(figsize=(10,10))
         plt.scatter(x, y, c=cvec)
+
+        if title != 'NONE':
+            plt.title(title)
+
         plt.show()
 
     @staticmethod
