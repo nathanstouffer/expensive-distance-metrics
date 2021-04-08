@@ -1,4 +1,9 @@
+import math
+
 import numpy as np
+
+from src.printer import printer
+
 
 class Complete:
     """docstring for Complete."""
@@ -12,7 +17,9 @@ class Complete:
         self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
         file.close()
 
+        printer("starting complete")
         self.build_matrix()  # compute n choose 2 different distances
+        printer("ending complete")
 
     def build_matrix(self):
         n = len(self.points)
@@ -22,6 +29,9 @@ class Complete:
                 dist = self.d(self.points[i], self.points[j])
                 matrix[i][j] = dist
                 matrix[j][i] = dist
+
+            if i % (math.floor(n/10)) == 0:
+                printer("Progress: " + str(i / n))
 
         self.matrix = matrix
 

@@ -3,6 +3,9 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
+from src.printer import printer
+
+
 class Approx:
     def __init__(self, filename, eps, point_reader, dist, edge_selector):
         self.filename = filename
@@ -16,9 +19,11 @@ class Approx:
         self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
         file.close()
 
+        printer("starting approx with eps=" + str(self.epsilon))
         self.init_graph()
         self.compute_spanner()
         self.build_matrix()
+        printer("ending approx with eps=" + str(self.epsilon))
 
 
     def init_graph(self):
@@ -35,7 +40,8 @@ class Approx:
         indx = self.selector(self.lower, self.upper, self.epsilon)
         iter = 0
         while (indx[0] != -1):
-            print("iter: " + str(iter))
+            if iter % 100 == 0:
+                printer("Iter: " + str(iter))
             iter += 1
             i = indx[0]
             j = indx[1]
@@ -61,8 +67,6 @@ class Approx:
 
         for k in range(n):
             for l in range(k+1, n):
-                # TODO: fix updates. Something is wrong with first coordinate. For [i][j] lower > upper sometimes and
-                # TODO: if so then lower[i][k] = lower[i][q]
                 u1, u2, u3 = self.upper[k][l], self.upper[k][i] + v + self.upper[j][l], self.upper[k][j] + v + self.upper[i][l]
                 upper = min(u1, u2, u3)
                 # self.upper[l][k] = upper
