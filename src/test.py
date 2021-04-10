@@ -8,16 +8,18 @@ import sklearn.metrics as sk
 
 
 if __name__ == "__main__":
-    file = 'hausdorff-cloud-100-50.in'
+    file = 'euclidean-cluster-4-100.in'
 
     s = time.time()
-    c = Complete(file, point_readers.hausdorff_cloud_r, metrics.hausdorff_cloud)
+    c = Complete(file, point_readers.euclidean_r, metrics.euclidean)
     print("Complete: " + str(time.time() - s))
     c.mtx_to_file()
     db = dbscanner(c.matrix,10)
     db.run()
-    #db.plot(c.points, title='Actual')
+    # db.plot(c.points, title='Actual')
+    db.plot(c.matrix, title='Actual')
     print()
+    exit()
 
     # a = Approx('euclidean-cluster-1000-200.in', 0, point_readers.euclidean_r, metrics.euclidean, edge_selectors.blind_greedy)
     # a.mtx_to_file()
