@@ -8,11 +8,28 @@ import sklearn.metrics as sk
 
 
 if __name__ == "__main__":
-    # matrix = dbscan.read_file('../distances/hausdorff-cloud-100-50-complete.csv')
-    # db = dbscanner(matrix, 10)
-    # db.run()
-    # db.plot(matrix, title='Actual')
-    # exit(13)
+    '''
+    Load data
+    '''
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-complete.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Actual')
+
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-approx-eps-0.1.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Epsilon = 0.1')
+
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-approx-eps-3.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Epsilon = 0.3')
+    exit(13)
+
+    '''
+    RUN TESTS
+    '''
 
     file = 'hausdorff-cloud-cluster-4-100-20.in'
 
