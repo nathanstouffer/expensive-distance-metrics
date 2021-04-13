@@ -2,6 +2,7 @@ from sklearn.cluster import DBSCAN
 import matplotlib.pyplot as plt
 import numpy as np
 import colorsys
+from sklearn.manifold import MDS
 
 
 class dbscanner:
@@ -18,6 +19,9 @@ class dbscanner:
         # self.plot(labels, complete)
 
     def plot(self, points, title = 'NONE'):
+        if np.array(points).shape[1] > 2:  # we have a distance matrix so find an embedding
+            points = get_embedding(points)
+
         colors_d = self.__assign_colors(max(self.labels) + 1)
         colors = {}
         for i in range(max(self.labels) + 1):
@@ -44,4 +48,17 @@ class dbscanner:
         return colors
 
 
+def read_file(filepath):
+    arr = np.genfromtxt(filepath, delimiter=",")
+    return arr
+
+
+def get_embedding(matrix):
+    model = MDS(n_components=2, dissimilarity='precomputed', random_state=1)
+    out = model.fit_transform(matrix)
+    points = []
+    for p in out:
+        point = (p[0], p[1])
+        points.append(point)
+    return points
 

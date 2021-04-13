@@ -8,7 +8,30 @@ import sklearn.metrics as sk
 
 
 if __name__ == "__main__":
-    file = 'hausdorff-cloud-100-50.in'
+    '''
+    Load data
+    '''
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-complete.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Actual')
+
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-approx-eps-0.1.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Epsilon = 0.1')
+
+    matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-approx-eps-3.csv')
+    db = dbscanner(matrix, 10)
+    db.run()
+    db.plot(matrix, title='Epsilon = 0.3')
+    exit(13)
+
+    '''
+    RUN TESTS
+    '''
+
+    file = 'hausdorff-cloud-cluster-4-100-20.in'
 
     s = time.time()
     c = Complete(file, point_readers.hausdorff_cloud_r, metrics.hausdorff_cloud)
@@ -16,7 +39,8 @@ if __name__ == "__main__":
     c.mtx_to_file()
     db = dbscanner(c.matrix,10)
     db.run()
-    #db.plot(c.points, title='Actual')
+    # db.plot(c.points, title='Actual')
+    db.plot(c.matrix, title='Actual')
     print()
 
     # a = Approx('euclidean-cluster-1000-200.in', 0, point_readers.euclidean_r, metrics.euclidean, edge_selectors.blind_greedy)
@@ -31,6 +55,7 @@ if __name__ == "__main__":
     a.mtx_to_file()
     db2 = dbscanner(a.matrix,10)
     db2.run()
+    db2.plot(a.matrix, title="Epsilon = 0.1")
 
     homo, complete, v = sk.homogeneity_completeness_v_measure(db.labels, db2.labels)
     print("Approx (eps=0.1) clustering diff: {:f}, {:f}, {:f}".format(homo, complete, v))
@@ -43,6 +68,7 @@ if __name__ == "__main__":
     a.mtx_to_file()
     db2 = dbscanner(a.matrix,10)
     db2.run()
+    db2.plot(a.matrix, title="Epsilon = 3")
 
     homo, complete, v = sk.homogeneity_completeness_v_measure(db.labels, db2.labels)
     print("Approx (eps=3) clustering diff: {:f}, {:f}, {:f}".format(homo, complete, v))
