@@ -24,7 +24,7 @@ if __name__ == "__main__":
     matrix = dbscan.read_file('../distances/hausdorff-cloud-cluster-4-100-20-approx-eps-3.csv')
     db = dbscanner(matrix, 10)
     db.run()
-    db.plot(matrix, title='Epsilon = 0.3')
+    db.plot(matrix, title='Epsilon = 3')
     exit(13)
 
     '''
