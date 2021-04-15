@@ -2,6 +2,7 @@ import math
 import numpy.linalg as la
 import numpy as np
 
+
 '''
 Basic euclidean distance
 '''

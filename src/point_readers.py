@@ -1,7 +1,7 @@
 import os
 
 import numpy as np
-
+import glob
 from src.printer import printer
 
 
@@ -49,7 +49,7 @@ def read_model(file):
     return points
 
 
-def model_net10_r():
+def model_net10_r(n):
     points = []
     path = '../ModelNet10/'
     dirs = next(os.walk(path))[1]
@@ -59,9 +59,29 @@ def model_net10_r():
         subpath = path + dir + '/train/'
         files = next(os.walk(subpath))[2]
         printer(str(dir))
-        for file in files:
-            points.append(read_model(subpath + file))
+        for i in range(n):
+            points.append(read_model(subpath + files[i]))
 
     printer("Done loading points")
     return points
 
+
+def read_trip_file(file_name):
+    x = []
+    y = []
+    fin = open(file_name, "r")
+    for line in fin:
+        line = line.split(" ")
+        x.append(float(line[0]))
+        y.append(float(line[1]))
+    x = np.array(x)
+    y = np.array(y)
+    fin.close()
+
+def trip_r(dir):
+    points = []
+    files = glob.glob(dir + "/*.txt")
+    for file in files:
+        points.append(read_trip_file(file))
+
+    return points

@@ -9,10 +9,10 @@ import sklearn.metrics as sk
 
 
 if __name__ == "__main__":
-    # p = point_readers.model_net10_r()
-    #
-    # f = open('../input/ModelNet10_pickl.pkl', 'wb')
-    # pickle.dump(p, f)
+    p = point_readers.model_net10_r(15)
+
+    f = open('../input/ModelNet10_pickl-15.pkl', 'wb')
+    pickle.dump(p, f)
     # exit(13)
 
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     RUN TESTS
     '''
 
-    file = 'ModelNet10_pickl.pkl'
+    file = 'ModelNet10_pickl-15.pkl'
 
     s = time.time()
     a = Approx(file, 3, point_readers.hausdorff_cloud_r, metrics.hausdorff_cloud, edge_selectors.blind_greedy)
