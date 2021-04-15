@@ -1,3 +1,5 @@
+import pickle
+
 import networkx as nx
 import numpy as np
 import time
@@ -15,8 +17,13 @@ class Approx:
         self.selector = edge_selector
 
         self.d = dist
-        file = open(self.path, 'r')
-        self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
+        if filename.endswith('.pkl'):
+            file = open(self.path, 'rb')
+            self.points = pickle.load(file)
+        else:
+            file = open(self.path, 'r')
+            self.points = point_reader(file)
+        file.close()
         file.close()
 
         printer("starting approx with eps=" + str(self.epsilon))

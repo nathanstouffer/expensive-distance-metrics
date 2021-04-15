@@ -1,4 +1,5 @@
 import math
+import pickle
 
 import numpy as np
 
@@ -13,8 +14,13 @@ class Complete:
         self.path = '../input/' + filename
 
         self.d = dist
-        file = open(self.path, 'r')
-        self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
+
+        if filename.endswith('.pkl'):
+            file = open(self.path, 'rb')
+            self.points = pickle.load(file)
+        else:
+            file = open(self.path, 'r')
+            self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
         file.close()
 
         printer("starting complete")
