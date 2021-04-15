@@ -74,14 +74,14 @@ def read_trip_file(file_name):
         line = line.split(" ")
         x.append(float(line[0]))
         y.append(float(line[1]))
+    fin.close()
     x = np.array(x)
     y = np.array(y)
-    fin.close()
+    return np.array([x, y])
 
 def trip_r(dir):
     points = []
     files = glob.glob(dir + "/*.txt")
     for file in files:
         points.append(read_trip_file(file))
-
     return points
