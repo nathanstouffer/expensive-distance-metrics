@@ -14,5 +14,5 @@ def file_printer(str):
     print(str)
     if FILE:
         f = open(filepath, 'a')
-        f.write(str)
+        f.write(str + '\n')
         f.close()
