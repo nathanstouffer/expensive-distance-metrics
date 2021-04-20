@@ -37,7 +37,7 @@ def hausdorff_cloud_r(file):
 
 def read_model(file):
     file = open(file, 'r')
-    file.readline()
+    file.readline()  # read 'OFF\n'
     verts, face, edges = file.readline().split(' ')  # two headers in the OFF files
     face, verts, edges = int(face), int(verts), int(edges)
     points = []
@@ -49,18 +49,18 @@ def read_model(file):
     return points
 
 
-def model_net10_r(n):
+def shape_r(path, subdir='/'):
     points = []
-    path = '../ModelNet10/'
+    path = path
     dirs = next(os.walk(path))[1]
     printer(str(dirs))
 
     for dir in dirs:
-        subpath = path + dir + '/train/'
+        subpath = path + dir + subdir
         files = next(os.walk(subpath))[2]
         printer(str(dir))
-        for i in range(n):
-            points.append(read_model(subpath + files[i]))
+        for f in files:
+            points.append(read_model(subpath + f))
 
     printer("Done loading points")
     return points

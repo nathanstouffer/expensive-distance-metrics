@@ -105,6 +105,9 @@ class Approx:
                 self.matrix[i][j] = p[i][j]
                 self.matrix[j][i] = p[i][j]
 
-    def mtx_to_file(self):
-        filename = self.filename[:-3]  # chop off .in
-        np.savetxt('../distances/' + filename + '-approx-eps-' + str(self.epsilon) + '.csv', self.matrix, delimiter=",")
+    def mtx_to_file(self, path='NONE'):
+        if path == 'NONE':
+            filename = self.filename[:-3]  # chop off .in
+        else:
+            filename = path
+        np.savetxt(filename + '-approx-eps-' + str(self.epsilon) + '.csv', self.matrix, delimiter=",")

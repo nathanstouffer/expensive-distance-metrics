@@ -1,6 +1,7 @@
 import pickle
 import time
 
+from datagen import genshapes
 from src.approx import Approx
 from src.complete import Complete
 from src import point_readers, metrics, edge_selectors, dbscan
@@ -9,8 +10,19 @@ from src.dbscan import dbscanner
 import sklearn.metrics as sk
 import sys
 
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d as plt3
+
 
 if __name__ == "__main__":
+
+    # plt.figure(1)
+    # ax = plt.axes(projection='3d')
+    # points = genshapes.torus(500)
+    # for point in points:
+    #     ax.scatter3D(point[0], point[1], point[2])
+    # plt.show()
+    # exit(13)
 
     # p = point_readers.model_net10_r(15)
     #
