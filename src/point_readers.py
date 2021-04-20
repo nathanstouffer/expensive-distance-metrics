@@ -3,6 +3,7 @@ import os
 import numpy as np
 import glob
 from src.printer import printer, file_printer
+import src.printer as printer_class
 
 
 def euclidean_r(file):
@@ -60,8 +61,11 @@ def shape_r(path, subdir='/'):
         files = next(os.walk(subpath))[2]
         printer(str(dir))
         for f in files:
-            file_printer("LABEL: {:} FILE: {:}".format(str(dir), str(f)))
+            file_printer("LABEL: {:} FILE: {:}".format(str(dir), str(f)), prio=0)
             points.append(read_model(subpath + f))
+
+        printer_class.PRIORITY = 1
+
 
     printer("Done loading points")
     return points
