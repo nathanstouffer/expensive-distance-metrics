@@ -67,17 +67,14 @@ def model_net10_r(n):
 
 
 def read_trip_file(file_name):
-    x = []
-    y = []
+    points = []
     fin = open(file_name, "r")
     for line in fin:
         line = line.split(" ")
-        x.append(float(line[0]))
-        y.append(float(line[1]))
+        points.append(np.array([float(line[0]), float(line[1])]))
     fin.close()
-    x = np.array(x)
-    y = np.array(y)
-    return np.array([x, y])
+    return np.array(points)
+
 
 def trip_r(dir):
     points = []

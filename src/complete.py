@@ -11,7 +11,7 @@ class Complete:
 
     def __init__(self, filename, point_reader, dist):
         self.filename = filename
-        self.path = '../input/' + filename
+        self.path = filename
 
         self.d = dist
 
@@ -19,9 +19,7 @@ class Complete:
             file = open(self.path, 'rb')
             self.points = pickle.load(file)
         else:
-            file = open(self.path, 'r')
-            self.points = point_reader(file)  # create list of points using point_reader (assume point_reader returns list of points)
-        file.close()
+            self.points = point_reader(filename)  # create list of points using point_reader (assume point_reader returns list of points)
 
         printer("starting complete")
         self.build_matrix()  # compute n choose 2 different distances

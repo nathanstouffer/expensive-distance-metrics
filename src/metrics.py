@@ -1,6 +1,8 @@
 import math
 import numpy.linalg as la
 import numpy as np
+import Fred.backend as fred
+import Fred
 
 
 '''
@@ -37,4 +39,10 @@ def hausdorff_cloud(c1, c2):
 
     return sup
 
+
+def frechet(p1, p2):
+    fred.set_continuous_frechet_epsilon(0)
+    c1 = fred.Curve(p1)
+    c2 = fred.Curve(p2)
+    return fred.continuous_frechet(c1, c2).value
 

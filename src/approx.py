@@ -11,7 +11,7 @@ from src.printer import printer
 class Approx:
     def __init__(self, filename, eps, point_reader, dist, edge_selector):
         self.filename = filename
-        self.path = '../input/' + filename
+        self.path = filename
 
         self.epsilon = eps
         self.selector = edge_selector
@@ -21,10 +21,8 @@ class Approx:
             file = open(self.path, 'rb')
             self.points = pickle.load(file)
         else:
-            file = open(self.path, 'r')
-            self.points = point_reader(file)
-        file.close()
-        file.close()
+
+            self.points = point_reader(filename)
 
         printer("starting approx with eps=" + str(self.epsilon))
         self.init_graph()
