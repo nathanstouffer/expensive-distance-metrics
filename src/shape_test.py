@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     s = time.time()
     a = Approx(file, 3, point_readers.shape_r, metrics.hausdorff_cloud, edge_selectors.blind_greedy)
-    print("Approx (eps=3): " + str(time.time() - s))
+    file_printer("Approx (eps=3): " + str(time.time() - s))
     a.mtx_to_file(path="../distances/shapes-500")
     # db2 = dbscanner(a.matrix, 1)
     # db2.run()
