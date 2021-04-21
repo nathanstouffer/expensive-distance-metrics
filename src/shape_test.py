@@ -22,15 +22,15 @@ if __name__ == "__main__":
 
     file = '../gen_shapes/'
 
-    # s = time.time()
-    # c = Complete(file, point_readers.shape_r, metrics.hausdorff_cloud)
-    # file_printer("Complete: " + str(time.time() - s))
-    # c.mtx_to_file(path="../distances/shapes-500")
-    # db = dbscanner(c.matrix,1)
-    # db.run()
-    # # db.plot(c.points, title='Actual')
-    # db.plot(c.matrix, title='Actual')
-    # print()
+    s = time.time()
+    c = Complete(file, point_readers.shape_r, metrics.hausdorff_cloud)
+    file_printer("Complete: " + str(time.time() - s))
+    c.mtx_to_file(path="../distances/shapes-500")
+    db = dbscanner(c.matrix,1)
+    db.run()
+    # db.plot(c.points, title='Actual')
+    db.plot(c.matrix, title='Actual')
+    print()
 
     s = time.time()
     a = Approx(file, 3, point_readers.shape_r, metrics.hausdorff_cloud, edge_selectors.blind_greedy)

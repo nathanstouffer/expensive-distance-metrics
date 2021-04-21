@@ -1,6 +1,6 @@
 DEBUG = True
 FILE = True
-filepath = 'out.txt'
+filepath = 'stouff-out.txt'
 
 
 def printer(str):

@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # pickle.dump(p, f)
     # # exit(13)
 
-    # sys.stdout = open('out.txt', 'w')
+    # sys.stdout = open('elliott-out.txt', 'w')
     #
     # complete = dbscan.read_file("../gps-data/athens_small/tri-complete.csv")
     # approx = dbscan.read_file("../gps-data/athens_small/tri-approx-eps-3.csv")
