@@ -1,6 +1,7 @@
 DEBUG = True
 FILE = True
-filepath = 'stouff-out.txt'
+PRIORITY = 0
+filepath = 'out.txt'
 
 
 def printer(str):
@@ -9,10 +10,11 @@ def printer(str):
         print('\t' + str)
 
 
-def file_printer(str):
+def file_printer(str, prio=1):
     global FILE
+    global PRIORITY
     print(str)
-    if FILE:
+    if FILE and prio >= PRIORITY:
         f = open(filepath, 'a')
         f.write(str + '\n')
         f.close()
