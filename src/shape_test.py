@@ -55,6 +55,7 @@ if __name__ == "__main__":
     # db.run()
     # # db.plot(c.points, title='Actual')
     # db.plot(c.matrix, title='Actual')
+
     print()
 
     run_approx(file, 3)
@@ -66,10 +67,10 @@ if __name__ == "__main__":
     # homo, complete, v = sk.homogeneity_completeness_v_measure(db.labels, db2.labels)
     # file_printer("Approx (eps=3) clustering diff: {:f}, {:f}, {:f}".format(homo, complete, v))
 
-    # s = time.time()
-    # a = Approx(file, 0.1, point_readers.shape_r, metrics.hausdorff_cloud, edge_selectors.blind_greedy)
-    # file_printer("Approx (eps=0.1): " + str(time.time() - s))
-    # a.mtx_to_file()
+    s = time.time()
+    a = Approx(file, 0.1, point_readers.shape_r, metrics.hausdorff_cloud, edge_selectors.blind_greedy)
+    file_printer("Approx (eps=0.1): " + str(time.time() - s))
+    a.mtx_to_file(path="../distances/shapes-500")
     # db2 = dbscanner(a.matrix,1)
     # db2.run()
     # db2.plot(a.matrix, title="Epsilon = 0.1")
