@@ -9,7 +9,7 @@ from src.printer import printer
 
 
 class Approx:
-    def __init__(self, filename, eps, point_reader, dist, edge_selector):
+    def __init__(self, filename, eps, point_reader, dist, edge_selector, graph=None, lower=None, upper=None):
         self.filename = filename
         self.path = filename
 
@@ -21,11 +21,16 @@ class Approx:
             file = open(self.path, 'rb')
             self.points = pickle.load(file)
         else:
-
             self.points = point_reader(filename)
 
         printer("starting approx with eps=" + str(self.epsilon))
         self.init_graph()
+
+        if graph is not None and lower is not None and upper is not None:
+            self.lower = lower
+            self.upper = upper
+            self.G = graph
+
         self.compute_spanner()
         self.build_matrix()
         printer("ending approx with eps=" + str(self.epsilon))

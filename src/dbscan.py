@@ -18,7 +18,7 @@ class dbscanner:
         # print(labels)
         # self.plot(labels, complete)
 
-    def plot(self, points, title = 'NONE'):
+    def plot(self, points, title = 'NONE', true_labels=None):
         if np.array(points).shape[1] > 2:  # we have a distance matrix so find an embedding
             points = get_embedding(points)
 
@@ -29,15 +29,30 @@ class dbscanner:
         colors[-1] = 'k'
 
         cvec = [colors[label] for label in self.labels]
+        mvec, true = ['.' for _ in points], ['.' for _ in points]
+        if true_labels is not None:
+            mvec, true = self.__assign_shapes(true_labels)
 
         x = [p[0] for p in points]
         y = [p[1] for p in points]
 
         fig = plt.figure(figsize=(10,10))
-        plt.scatter(x, y, c=cvec)
+        mtypes = list(set(mvec))
+        for j,type in enumerate(mtypes):
+            px = []
+            py = []
+            pc = []
+            for i in range(len(points)):
+                if (mvec[i] == type):
+                    px.append(x[i])
+                    py.append(y[i])
+                    pc.append(cvec[i])
+            plt.scatter(px, py, color=pc, marker=type, s=50, label=true[j])
 
         if title != 'NONE':
             plt.title(title)
+
+        plt.legend()
 
         plt.show()
 
@@ -46,6 +61,17 @@ class dbscanner:
         HSV_tuples = [(x * 1.0 / N, 1, 1) for x in range(N)]
         colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), HSV_tuples))
         return colors
+
+    @staticmethod
+    def __assign_shapes(labels):
+        labs = list(set(labels))  # this is horrible
+        markers = ['.', 'o', 'v', "s", "+", "D", "^", "p", "x", "*"]
+        marks = []
+        for l in labels:
+            indx = labs.index(l)
+            marks.append(markers[indx])
+        return marks, labs
+
 
 
 def read_file(filepath):

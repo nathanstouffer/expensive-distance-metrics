@@ -1,7 +1,7 @@
 DEBUG = True
 FILE = True
 PRIORITY = 0
-filepath = 'out.txt'
+filepath = 'elliott-out.txt'
 
 
 def printer(str):
