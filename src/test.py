@@ -14,88 +14,48 @@ import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d as plt3
 
 
+def run_complete(file, path=""):
+    s = time.time()
+    c = Complete(file, point_readers.trip_r, metrics.frechet)
+    file_printer("Complete: " + str(time.time() - s))
+    if path == "":
+        c.mtx_to_file(path="../distances/athens-small")
+    else:
+        c.mtx_to_file(path=path)
+
+
+def run_approx(file, eps, path="", graph=None, lower=None, upper=None):
+    s = time.time()
+    a = Approx(file, eps, point_readers.trip_r, metrics.frechet, edge_selectors.blind_greedy,
+               graph=graph, lower=lower, upper=upper)
+    file_printer("Approx Eps {:f}: {:f}".format(eps,time.time() - s))
+    if path == "":
+        a.mtx_to_file(path="../distances/athens-small")
+    else:
+        a.mtx_to_file(path=path)
+    return a
+
+
 if __name__ == "__main__":
 
-    # plt.figure(1)
-    # ax = plt.axes(projection='3d')
-    # points = genshapes.torus(500)
-    # for point in points:
-    #     ax.scatter3D(point[0], point[1], point[2])
-    # plt.show()
-    # exit(13)
-
-    # p = point_readers.model_net10_r(15)
-    #
-    # f = open('../input/ModelNet10_pickl-15.pkl', 'wb')
-    # pickle.dump(p, f)
-    # # exit(13)
-
-    # sys.stdout = open('elliott-out.txt', 'w')
-    #
-    # complete = dbscan.read_file("../gps-data/athens_small/tri-complete.csv")
-    # approx = dbscan.read_file("../gps-data/athens_small/tri-approx-eps-3.csv")
-    #
-    # embed = dbscan.get_embedding(complete)
-    #
-    # dbc = dbscanner(complete, 1200)
-    # dbc.run()
-    # dbc.plot(embed, title="Complete")
-    # print(max(dbc.labels))
-    #
-    # dba = dbscanner(approx, 1200)
-    # dba.run()
-    # dba.plot(embed, title="Approx 3")
-    # print(max(dba.labels))
-    #
-    # exit()
 
     '''
     RUN TESTS
     '''
 
     file = '../gps-data/athens_small/trips/'
+    run_complete(file)
 
 
-    s = time.time()
-    c = Complete(file, point_readers.trip_r, metrics.frechet)
-    file_printer("Complete: " + str(time.time() - s))
-    c.mtx_to_file()
-    db = dbscanner(c.matrix,10)
-    db.run()
-    # db.plot(c.points, title='Actual')
-    db.plot(c.matrix, title='Actual')
-    print()
-
-    # a = Approx('euclidean-cluster-1000-200.in', 0, point_readers.euclidean_r, metrics.euclidean, edge_selectors.blind_greedy)
-    # a.mtx_to_file()
-    # db2 = dbscanner(a.matrix,10)
-    # db2.run()
-    # db2.plot(a.points, title='Actual')
-
-    s = time.time()
-    a = Approx(file, 3, point_readers.trip_r, metrics.frechet, edge_selectors.blind_greedy)
-    print("Approx (eps=3): " + str(time.time() - s))
-    a.mtx_to_file()
-    db2 = dbscanner(a.matrix, 10)
-    db2.run()
-    db2.plot(a.matrix, title="Epsilon = 3")
-    print("Finished Approx 3")
-
-    homo, complete, v = sk.homogeneity_completeness_v_measure(db.labels, db2.labels)
-    file_printer("Approx (eps=3) clustering diff: {:f}, {:f}, {:f}".format(homo, complete, v))
-
-    s = time.time()
-    a = Approx(file, 0.1, point_readers.trip_r, metrics.frechet, edge_selectors.blind_greedy)
-    file_printer("Approx (eps=0.1): " + str(time.time() - s))
-    a.mtx_to_file()
-    db2 = dbscanner(a.matrix,10)
-    db2.run()
-    db2.plot(a.matrix, title="Epsilon = 0.1")
-
-    homo, complete, v = sk.homogeneity_completeness_v_measure(db.labels, db2.labels)
-    file_printer("Approx (eps=0.1) clustering diff: {:f}, {:f}, {:f}".format(homo, complete, v))
-
-    #db2.plot(a.points, title='Approx - 0.1')
+    eps = [10, 5, 3, 2, 1.5, 1, 0.5, 0.35, 0.1]
+    graph = None
+    lower = None
+    upper = None
+    for e in eps:
+        a = run_approx(file, e, graph=graph, lower=lower, upper=upper)
+        graph = a.G
+        lower = a.lower
+        upper = a.upper
 
 
 
