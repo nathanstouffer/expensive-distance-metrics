@@ -7,6 +7,7 @@ import src.printer as printer_class
 
 
 def euclidean_r(file):
+    file = open(file, 'r')
     points = []
     size = int(file.readline())
     for line in file:
@@ -14,6 +15,7 @@ def euclidean_r(file):
         p = [float(l) for l in line]  # convert line to list of floats
         p = np.array(p)
         points.append(p)
+    file.close()
     return points
 
 

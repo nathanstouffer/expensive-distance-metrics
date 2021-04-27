@@ -1,7 +1,7 @@
 DEBUG = True
 FILE = True
 PRIORITY = 0
-filepath = 'completefrechet.txt'
+filepath = 'elliott-out.txt'
 
 
 def printer(str):

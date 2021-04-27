@@ -110,6 +110,14 @@ class Approx:
                 self.matrix[i][j] = p[i][j]
                 self.matrix[j][i] = p[i][j]
 
+    def draw_graph(self, save="FALSE"):
+        pos = nx.circular_layout(self.G)
+        nx.draw(self.G, pos=pos, node_size=25, node_color='g', width=0.1)
+
+        if save != "FALSE":
+            plt.savefig(save)
+        plt.show()
+
     def mtx_to_file(self, path='NONE'):
         if path == 'NONE':
             filename = self.filename[:-3]  # chop off .in

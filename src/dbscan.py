@@ -18,7 +18,7 @@ class dbscanner:
         # print(labels)
         # self.plot(labels, complete)
 
-    def plot(self, points, title = 'NONE', true_labels=None):
+    def plot(self, points, title = 'NONE', true_labels=None, save="FALSE"):
         if np.array(points).shape[1] > 2:  # we have a distance matrix so find an embedding
             points = get_embedding(points)
 
@@ -29,16 +29,15 @@ class dbscanner:
         colors[-1] = 'k'
 
         cvec = [colors[label] for label in self.labels]
-        mvec, true = ['.' for _ in points], ['.' for _ in points]
+        mvec, true_set, mark_set = ['.' for _ in points], ['none'], ['.']
         if true_labels is not None:
-            mvec, true = self.__assign_shapes(true_labels)
+            mvec, true_set, mark_set = self.__assign_shapes(true_labels)
 
         x = [p[0] for p in points]
         y = [p[1] for p in points]
 
         fig = plt.figure(figsize=(10,10))
-        mtypes = list(set(mvec))
-        for j,type in enumerate(mtypes):
+        for j,type in enumerate(mark_set):
             px = []
             py = []
             pc = []
@@ -47,13 +46,16 @@ class dbscanner:
                     px.append(x[i])
                     py.append(y[i])
                     pc.append(cvec[i])
-            plt.scatter(px, py, color=pc, marker=type, s=50, label=true[j])
+            plt.scatter(px, py, color=pc, marker=type, s=50, label=true_set[j])
 
         if title != 'NONE':
-            plt.title(title)
+            plt.title(title, fontsize=24)
 
-        plt.legend()
+        if true_labels is not None:
+            plt.legend(fontsize=12)
 
+        if save != "FALSE":
+            plt.savefig(save)
         plt.show()
 
     @staticmethod
@@ -64,13 +66,14 @@ class dbscanner:
 
     @staticmethod
     def __assign_shapes(labels):
-        labs = list(set(labels))  # this is horrible
-        markers = ['.', 'o', 'v', "s", "+", "D", "^", "p", "x", "*"]
+        labs = []  # this is horrible
+        markers = ['s', '.', 'v', "o", "+", "D", "^", "p", "x", "*"]
         marks = []
         for l in labels:
-            indx = labs.index(l)
-            marks.append(markers[indx])
-        return marks, labs
+            if l not in labs:
+                labs.append(l)
+            marks.append(markers[labs.index(l)])
+        return marks, labs, markers[:len(labs)]
 
 
 
